@@ -52,6 +52,13 @@ const events = {
 };
 
 /**
+ * Event fired when the iframe and its resources a loaded, indicating
+ * that the UI in the iframe had finished loading.
+ * @type {string}
+ */
+const UI_LOADED_EVENT = 'uiLoaded';
+
+/**
  * Last id of api object
  * @type {number}
  */
@@ -259,6 +266,11 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
         this._frame.setAttribute('allowFullScreen', 'true');
         this._frame.style.border = 0;
         this._frame = this._parentNode.appendChild(this._frame);
+
+        // waits for iframe resources to load and fires event when it is done
+        this._frame.contentWindow.addEventListener('load', () => {
+            this.emit(UI_LOADED_EVENT);
+        });
     }
 
     /**
@@ -473,6 +485,8 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
      * }}
      * readyToClose - all hangup operations are completed and Jitsi Meet is
      * ready to be disposed.
+     * uiLoaded - all loading operations are completed and Jitsi Meet is
+     * ready to be shown.
      * @returns {void}
      *
      * @deprecated

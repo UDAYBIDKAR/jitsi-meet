@@ -238,6 +238,8 @@ changes. The listener will receive an object with the following structure:
 
 * **readyToClose** - event notification fired when Jitsi Meet is ready to be closed (hangup operations are completed).
 
+* **uiLoaded** - event notification fired when Jitsi Meet UI is ready with loading.
+
 You can also add multiple event listeners by using `addEventListeners`.
 This method requires one argument of type Object. The object argument must
 have the names of the events as keys and the listeners of the events as values.
